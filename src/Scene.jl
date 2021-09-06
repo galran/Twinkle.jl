@@ -100,6 +100,10 @@ function grid!(s::Scene, visible::Bool)
     MeshCat.setprop!(vis(s)["/Grid"], "visible", visible)
 end
 
+function axes!(s::Scene, visible::Bool)
+    MeshCat.setprop!(vis(s)["/Axes"], "visible", visible)
+end
+
 function cameraPlanes!(s::Scene, near::Float64 = 0.1, far::Float64 = 1000.0)
     cam_vis = vis(s)["/Cameras/default/rotated/<object>"]
 
