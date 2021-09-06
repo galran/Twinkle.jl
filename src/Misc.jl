@@ -24,6 +24,9 @@ function updateVariable!(app::AbstractUIApp, var::AbstractUIVariable)
     @error "abstract function - should not reach here"
 end
 
+#---------------------------------------------------------------
+#   utility methods to convert image data into Base64 representation suted for JavaScript.
+#---------------------------------------------------------------
 show_png(io, x) = show(io, MIME"image/png"(), x)
 show_svg(io, x) = show(io, MIME"image/svg+xml"(), x)
 
@@ -120,10 +123,30 @@ end
 #---------------------------------------------------------------
 fixFolderSeperator(fn::String) = replace(fn, '\\' => '/')
 
-function examplesFolder()
-    return fixFolderSeperator(abspath(joinpath(dirname(@__FILE__), "..", "examples")))
+"""
+    rootFolder()
+
+return the root folder for this package.
+"""
+function rootFolder()
+    return fixFolderSeperator(abspath(joinpath(dirname(@__FILE__), "..")))
 end
 
+
+"""
+    examplesFolder()
+
+return the examples folder (~/examples) for this package.
+"""
+function examplesFolder()
+    return fixFolderSeperator(abspath(joinpath(rootFolder(), "examples")))
+end
+
+"""
+    examplesList()
+
+Display a list of avalable examples.
+"""
 function examplesList()
     folder = examplesFolder();
 
@@ -131,16 +154,28 @@ function examplesList()
 
     all_jl_files = [fn for fn in files if splitext(basename(fn))[2] == ".jl"]
 
-    println("-"^40)
-    println("Examples List for Twinkle")
-    println("Folder: $(folder)")
-    println("-"^40)
+    println("-"^60)
+    println("Examples List for Twinkle  [$(folder)]")
+    println("-"^60)
     for f in all_jl_files
-        println("    $(f)           to run:  julia> Twinkle.runExample(\"$(splitext(f)[1])\")")
+        len = length(f)
+        if (len < 20)
+            spaces = " "^(20 - len)
+        else
+            spaces = ""
+        end
+        println("    $(f)$(spaces)       to run:  julia> Twinkle.runExample(\"$(splitext(f)[1])\")")
     end
 
 end
 
+"""
+    runExample(example::String)
+
+Run the specific example. [example] is given without extension.
+For example, if we have an example file named "Controls.jl" the command to run it is:
+Twinkle.runExample("Controls")
+"""
 function runExample(example::String)
     fn = fixFolderSeperator(joinpath(examplesFolder(), "$(splitext(example)[1]).jl"))
 

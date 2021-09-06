@@ -118,6 +118,7 @@ function addVariable!(app::App, var::AbstractUIVariable)
     if (findVariable(app, var.name) !== nothing)
         error("Application already contains a variable [$(var.name)]")
     end
+    var._app = app
     push!(variables(app), var)
     return var
 end
