@@ -196,7 +196,7 @@ function getUIFolder()
         return res
     end
 
-    res = joinpath(dirname(@__FILE__), "..", "data", "dist");
+    res = joinpath(dirname(@__FILE__), "..", "Data", "dist");
     if (isdir(res))
         return res
     end
