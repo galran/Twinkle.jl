@@ -170,6 +170,27 @@ function JS_loader_node(filenames...)
     return Node(:dom, nodes...)
 end
 
+"""
+Fixing the path in the styles file for the MAterialIcons font for Blink to load locally from the dist directory
+"""
+function fixMaterialIConsStyles(styles_fn::String)
+    f = open(styles_fn, "r")
+    data = read(f, String)      
+    close(f)
+
+    prefix = replace(abspath(dirname(styles_fn)), '\\' => '/')
+    fixed_data = replace(data, "url(MaterialIcons-Regular" => "url($(prefix)/MaterialIcons-Regular")
+
+    # debug
+    # open("C:/T/Styles.txt", "w") do f
+    #     write(f, fixed_s)
+    # end
+
+    return Node(:style, fixed_data)
+end
+
+
+
 function application_node(jjs::JuliaJS, app_dir::String)
 
     dist_dir = joinpath(app_dir, "dist", basename(app_dir))
@@ -182,37 +203,37 @@ function application_node(jjs::JuliaJS, app_dir::String)
     ls = readdir(dist_dir, join=true)
 
     # special treatment of the Material Design Icons
-    additional_css = nothing
-    if (length([fn for fn in ls if startswith(basename(fn), "MaterialIcons-Regular")]) > 0)
+    # additional_css = nothing
+    # if (length([fn for fn in ls if startswith(basename(fn), "MaterialIcons-Regular")]) > 0)
 
-        all_files = [fn for fn in ls if startswith(basename(fn), "MaterialIcons-Regular")]
+    #     all_files = [fn for fn in ls if startswith(basename(fn), "MaterialIcons-Regular")]
 
-        eot_fn = replace([fn for fn in all_files if endswith(basename(fn), ".eot")][1], '\\'=>'/')
-        ttf_fn = replace([fn for fn in all_files if endswith(basename(fn), ".ttf")][1], '\\'=>'/')
-        woff_fn = replace([fn for fn in all_files if endswith(basename(fn), ".woff")][1], '\\'=>'/')
-        woff2_fn = replace([fn for fn in all_files if endswith(basename(fn), ".woff2")][1], '\\'=>'/')
-        # @info eot_fn
-        # @info ttf_fn
-        # @info woff_fn
-        # @info woff2_fn
+    #     eot_fn = replace([fn for fn in all_files if endswith(basename(fn), ".eot")][1], '\\'=>'/')
+    #     ttf_fn = replace([fn for fn in all_files if endswith(basename(fn), ".ttf")][1], '\\'=>'/')
+    #     woff_fn = replace([fn for fn in all_files if endswith(basename(fn), ".woff")][1], '\\'=>'/')
+    #     woff2_fn = replace([fn for fn in all_files if endswith(basename(fn), ".woff2")][1], '\\'=>'/')
+    #     # @info eot_fn
+    #     # @info ttf_fn
+    #     # @info woff_fn
+    #     # @info woff2_fn
 
-        # html, body { height: 100%; }
-        # body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }        
-        additional_css = """
+    #     # html, body { height: 100%; }
+    #     # body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }        
+    #     additional_css = """
         
-        @font-face {
-            font-family: 'Material Icons';
-            font-style: normal;
-            font-weight: 400;
-            src: url($eot_fn); /* For IE6-8 */
-            src: local('Material Icons'),
-                 local('MaterialIcons-Regular'),
-                 url($woff2_fn) format('woff2'),
-                 url($woff_fn) format('woff'),
-                 url($ttf_fn) format('truetype');
-          }        
-        """
-    end
+    #     @font-face {
+    #         font-family: 'Material Icons';
+    #         font-style: normal;
+    #         font-weight: 400;
+    #         src: url($eot_fn); /* For IE6-8 */
+    #         src: local('Material Icons'),
+    #              local('MaterialIcons-Regular'),
+    #              url($woff2_fn) format('woff2'),
+    #              url($woff_fn) format('woff'),
+    #              url($ttf_fn) format('truetype');
+    #       }        
+    #     """
+    # end
 
     node = Node(:dom, 
         JuliaJSBridge.node(jjs),
@@ -220,13 +241,14 @@ function application_node(jjs::JuliaJS, app_dir::String)
             joinpath(dirname(@__FILE__), "localjs.js"),
             joinpath(dirname(@__FILE__), "localjs.css"),
         ), 
+        fixMaterialIConsStyles([fn for fn in ls if startswith(basename(fn), "styles")][1]),
         JS_loader_node(
-            [fn for fn in ls if startswith(basename(fn), "styles")][1],
+            # [fn for fn in ls if startswith(basename(fn), "styles")][1],
             [fn for fn in ls if startswith(basename(fn), "main")][1],
             [fn for fn in ls if startswith(basename(fn), "polyfills")][1],
             [fn for fn in ls if startswith(basename(fn), "runtime")][1],
         ),
-        (additional_css!==nothing) ? Node(:style, additional_css) : Node(:p, "")
+        # (additional_css!==nothing) ? Node(:style, additional_css) : Node(:p, ""),
     )
     
     return node
