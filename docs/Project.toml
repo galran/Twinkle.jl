@@ -1,0 +1,4 @@
+[deps]
+Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
+StaticArrays = "90137ffa-7385-5640-81b9-e52037218182"
+Twinkle = "55254e13-1f76-49cc-b115-017fbe569f93"
