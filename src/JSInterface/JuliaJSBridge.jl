@@ -179,7 +179,7 @@ function fixMaterialIConsStyles(styles_fn::String)
     close(f)
 
     prefix = replace(abspath(dirname(styles_fn)), '\\' => '/')
-    fixed_data = replace(data, "url(MaterialIcons-Regular" => "url($(prefix)/MaterialIcons-Regular")
+    fixed_data = replace(data, "url(MaterialIcons-Regular" => "url(file:$(prefix)/MaterialIcons-Regular")
 
     # debug
     # open("C:/T/Styles.txt", "w") do f
