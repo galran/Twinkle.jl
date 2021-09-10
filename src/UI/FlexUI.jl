@@ -236,7 +236,7 @@ function Base.run(app::App)
 
     # show the blink window
     Blink.body!(win, ui, async=false)
-    Blink.AtomShell.opentools(win)
+    # Blink.AtomShell.opentools(win)
 
     # set the controls through JavaScript and also the viewer url
     # js_controls = [UIControls.typedict(c) for c in controls(app)]
@@ -277,7 +277,29 @@ function onBlinkUpdate(args::Dict{Any, Any}, app::App)
         end
 
         render!(app)
+
+    elseif get(meta_data, "source", "") == "dev-tools-update"
+        state = get(data, "state", "")
+        if (state) 
+            Blink.AtomShell.opentools(Twinkle.win(app))
+        else
+            Blink.AtomShell.closetools(Twinkle.win(app))
+        end
+
+    elseif get(meta_data, "source", "") == "set-zoom-level"
+        level = get(data, "level", "")
+        if (endswith(level, '%'))
+            level = level[1:end-1]
+        end
+        level = parse(Float64, level) / 100.0;
         
+        w = Twinkle.win(app)
+        id = w.id
+        @info "zoom level", level
+        command = """windows["$(id)"].webContents.setZoomFactor($level);"""
+        Blink.js(w.shell, Blink.JSString(command), callback=false)
+        @info "zoom level done"
+
     end
 
     # id = data["id"]

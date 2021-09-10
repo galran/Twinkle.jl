@@ -1,4 +1,4 @@
-module TwinkleExample
+module Example
 
 using Twinkle, Twinkle.FlexUI
 using Colors
@@ -80,7 +80,7 @@ ui = VContainer(
                             children = [
                                 Label(text="""Label(variable="labelText", isHTML=true)"""),
                                 Label(text="""You can change the content of the label using the Julia REPL:"""),
-                                Label(text="""REPL: TwinkleExample.labelText[] = "This text is from Julia" """, style="color: red;" ),
+                                Label(text="""REPL: Twinkle.Example.labelText[] = "This text is from Julia" """, style="color: red;" ),
                             ]
                         ),
                     ),
@@ -108,7 +108,7 @@ ui = VContainer(
                                     hint="No digits please",
                                     variable="firstName",
                                 )"""),
-                                Label(text="""REPL: TwinkleExample.firstName[] = "This text is from Julia" """, style="color: red;" ),
+                                Label(text="""REPL: Twinkle.Example.firstName[] = "This text is from Julia" """, style="color: red;" ),
                             ]
                         ),
                     ),
@@ -129,7 +129,7 @@ ui = VContainer(
                                     hint="in centimeters",
                                     variable="height",
                                 )"""),
-                                Label(text="""REPL: TwinkleExample.height[] = 183.1 """, style="color: red;" ),
+                                Label(text="""REPL: Twinkle.Example.height[] = 183.1 """, style="color: red;" ),
                             ]
                         ),
                     ),
@@ -163,7 +163,7 @@ ui = VContainer(
                                         Dict(:key=>"Four", :value=>"Forth Option"),
                                     ]
                                 )"""),
-                                Label(text="""REPL: TwinkleExample.option[] = "Two" """, style="color: red;" ),
+                                Label(text="""REPL: Twinkle.Example.option[] = "Two" """, style="color: red;" ),
                             ]
                         ),
                     ),                    

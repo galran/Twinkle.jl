@@ -1,4 +1,4 @@
-module TwinkleExample
+module Example
 
 using Twinkle, Twinkle.FlexUI
 using Colors

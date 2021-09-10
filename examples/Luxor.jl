@@ -1,4 +1,4 @@
-module TwinkleExample
+module Example
 
 using Twinkle, Twinkle.FlexUI
 using Colors
@@ -22,7 +22,7 @@ count = addVariable!(app, Variable(name="count", type="flota64",value=16))
 image = addVariable!(app, Variable(
     name="image",
     type="image",
-    value="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==", 
+    value="", 
 ))
 
 #---------------------------------------------------------------
