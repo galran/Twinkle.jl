@@ -26,6 +26,11 @@ export  Container,
         Tab,
         Divider,
         Card,
+        Markdown,
+        MDJulia,
+
+        CodeSnip,
+        CodeSnipJulia,
 
         VContainer,
         HContainer,
@@ -257,12 +262,39 @@ end
     titleVariable::Any = ""
     subtitle::String = ""
     subtitleVariable::Any = ""
-    content::String = ""
+    content::Union{String, UIControls.Container} = ""
     contentStyle::Any = ""
     variable::Any = ""                  # content source
     isHTML::Bool = false
 
     _app::Union{Nothing, Twinkle.AbstractUIApp} = nothing
 end
+
+@with_kw mutable struct Markdown <: AbstractUIControl 
+    type::String = "markdown"
+    style::Any = ""
+    content::String = ""
+    variable::Any = ""                  # content source
+    lineNumbers::Bool = false
+
+    _app::Union{Nothing, Twinkle.AbstractUIApp} = nothing
+end
+
+MDJulia(code) = Markdown(content = """```julia\n$(code)\n```""")
+
+@with_kw mutable struct CodeSnip <: AbstractUIControl 
+    type::String = "codesnip"
+    text::String = ""
+    language::String = "julia"
+    lineNumbers::Bool = false
+    commandLine::Bool = false
+    prompt::String = "julia>"
+    promptStyle::String = "-webkit-text-fill-color: rgb(51, 200, 51); -webkit-text-stroke-width:0.2px; -webkit-text-stroke-color: black;"
+    rawLines::String = "2-999"
+
+    _app::Union{Nothing, Twinkle.AbstractUIApp} = nothing
+end
+
+CodeSnipJulia(code) = CodeSnip(text=code, commandLine=true, prompt="julia>")
 
 end # module UIControlsget

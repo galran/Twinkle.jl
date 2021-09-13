@@ -153,11 +153,14 @@ function fix_controls!(app::App, controls::Vector{UIControls.AbstractUIControl})
             control.variable = unique_var_name
         end
 
+        # TODO: Should replace these statements with a scan of all fields and run the fix on each which is a UIControls.AbstractUIControl
         if (hasproperty(control, :children))
             fix_controls!(app, control.children)
         end
         if (hasproperty(control, :content))
-            fix_controls!(app, Vector{UIControls.AbstractUIControl}([control.content]))
+            if (control.content isa UIControls.AbstractUIControl)
+                fix_controls!(app, Vector{UIControls.AbstractUIControl}([control.content]))
+            end
         end
         if (hasproperty(control, :tabs))
             fix_controls!(app, Vector{UIControls.AbstractUIControl}(control.tabs))
