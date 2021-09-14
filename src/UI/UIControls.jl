@@ -124,6 +124,8 @@ end
     type::String = "button"
     text::String = "default button"
     variable::Any = nothing
+    buttonType::String = "normal"     # normal, raised, stroked, flat, icon, fab, mini-fab
+    color::String = "normal"          # normal, primary, accent, warn, 
 
     _variable_name_to_create::String = ""
     _app::Union{Nothing, Twinkle.AbstractUIApp} = nothing
@@ -164,10 +166,8 @@ H4Label(text::String) = Label(text=text, class="h4")
 
 @with_kw mutable struct Image <: AbstractUIControl 
     type::String = "image"
-    width::Any = "auto"
-    height::Any = "auto"
-    variable::Any = nothing
-    data::Any = nothing
+    style::Any = ""
+    source::Any = nothing
 
     _app::Union{Nothing, Twinkle.AbstractUIApp} = nothing
 end
@@ -222,6 +222,10 @@ end
     title::String = "defaut title"
     summary::String = ""
     content::Union{Nothing, UIControls.Container} = nothing
+    style::Any = ""
+    titleStyle::String = ""
+    subtitleStyle::String = ""
+    headerStyle::Any = ""
 
     _app::Union{Nothing, Twinkle.AbstractUIApp} = nothing
 end
@@ -260,8 +264,10 @@ end
     style::Any = ""
     title::String = ""
     titleVariable::Any = ""
+    titleStyle::String = ""
     subtitle::String = ""
     subtitleVariable::Any = ""
+    subtitleStyle::String = ""
     content::Union{String, UIControls.Container} = ""
     contentStyle::Any = ""
     variable::Any = ""                  # content source
