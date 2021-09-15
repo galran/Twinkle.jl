@@ -9,7 +9,7 @@ import Luxor
 println("Start [$(splitext(basename(@__FILE__))[1])]")
 
 app = App()
-prop!(app, :title, "Twinkle Example - Controls Gallery")
+prop!(app, :title, "Twinkle Example - Luxor")
 
 
 #---------------------------------------------------------------
@@ -49,19 +49,17 @@ ui = VContainer(
     ),  
     H1Label("Static Image Example"),
     Image(
-        variable="image",
-        height="50%",
+        source="\$(image)",
+        # height="50%",
     ),        
     H1Label("Image Viewer allowing Pan (left-drag) and Zoom (wheel)"),
     PanZoom(
-        width="100%",
-        height="400px",
+        style="width: 100%; height=400px;",
         content = Container(
             direction = "row warp",
             children = [
                 Image(
-                    variable="image",
-                    width="100%"
+                    source="\$(image)",
                 ),        
             ]
         ),

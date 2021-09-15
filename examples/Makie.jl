@@ -4,12 +4,12 @@ using Twinkle, Twinkle.FlexUI
 using Colors
 using StaticArrays
 using GeometryBasics
-import Makie
+import Makie, GLMakie
 
 println("Start [$(splitext(basename(@__FILE__))[1])]")
 
 app = App()
-prop!(app, :title, "Twinkle Example - Controls Gallery")
+prop!(app, :title, "Twinkle Example - Makie")
 
 
 #---------------------------------------------------------------
@@ -22,7 +22,7 @@ yscale = addVariable!(app, Variable(name="yscale", type="flota64",value=1))
 image = addVariable!(app, Variable(
     name="image",
     type="image",
-    value="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==", 
+    value="", 
 ))
 
 #---------------------------------------------------------------
@@ -49,19 +49,16 @@ ui = VContainer(
     ),  
     H1Label("Static Image Example"),
     Image(
-        variable="image",
-        height="50%",
+        source="\$(image)",
     ),        
     H1Label("Image Viewer allowing Pan (left-drag) and Zoom (wheel)"),
     PanZoom(
-        width="100%",
-        height="400px",
+        style="width: 100%; height=400px;",
         content = Container(
             direction = "row warp",
             children = [
                 Image(
-                    variable="image",
-                    width="100%"
+                    source="\$(image)",
                 ),        
             ]
         ),

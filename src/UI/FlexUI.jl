@@ -214,8 +214,8 @@ function Base.run(app::App)
 
     window_defaults = Blink.@d(
         :title => prop(app, :title, "?? app title ??"), 
-        :width => 1600, 
-        :height => 1200,
+        :width => prop(app, :winInitWidth, 1600), 
+        :height => prop(app, :winInitHeight, 1200),
         # this will allow us to load local file which is a security risk
         :webPreferences => Blink.@d(
             :webSecurity => false, 

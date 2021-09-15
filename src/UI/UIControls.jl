@@ -124,8 +124,9 @@ end
     type::String = "button"
     text::String = "default button"
     variable::Any = nothing
-    buttonType::String = "normal"     # normal, raised, stroked, flat, icon, fab, mini-fab
-    color::String = "normal"          # normal, primary, accent, warn, 
+    buttonType::String = "raised"     # normal, raised, stroked, flat, icon, fab, mini-fab
+    color::String = "primary"         # normal, primary, accent, warn, 
+    fileTypes::String = ""            # used for an open file dialog, like ".png,.jpg"  
 
     _variable_name_to_create::String = ""
     _app::Union{Nothing, Twinkle.AbstractUIApp} = nothing
@@ -174,8 +175,8 @@ end
 
 @with_kw mutable struct PanZoom <: AbstractUIControl 
     type::String = "pan-zoom"
-    width::Any = "auto"
-    height::Any = "auto"
+    style::Any = "width: 100%; height: 300px;"
+    innerStyle::Any = "width: auto; height: calc(100% - 30px);"
     content::Union{Nothing, UIControls.Container} = nothing
 
     _app::Union{Nothing, Twinkle.AbstractUIApp} = nothing
@@ -220,7 +221,7 @@ end
 @with_kw mutable struct ExpansionPanel <: AbstractUIControl 
     type::String = "expansion-panel"
     title::String = "defaut title"
-    summary::String = ""
+    subtitle::String = ""
     content::Union{Nothing, UIControls.Container} = nothing
     style::Any = ""
     titleStyle::String = ""
@@ -248,6 +249,7 @@ end
 
 @with_kw mutable struct Tabs <: AbstractUIControl 
     type::String = "tabs"
+    style::Any = ""
     tabs::Union{Nothing, Vector{UIControls.Tab}} = nothing
 
     _app::Union{Nothing, Twinkle.AbstractUIApp} = nothing
