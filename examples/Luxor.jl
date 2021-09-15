@@ -1,4 +1,4 @@
-module TwinkleExample
+module Example
 
 using Twinkle, Twinkle.FlexUI
 using Colors
@@ -9,7 +9,7 @@ import Luxor
 println("Start [$(splitext(basename(@__FILE__))[1])]")
 
 app = App()
-prop!(app, :title, "Twinkle Example - Controls Gallery")
+prop!(app, :title, "Twinkle Example - Luxor")
 
 
 #---------------------------------------------------------------
@@ -22,7 +22,7 @@ count = addVariable!(app, Variable(name="count", type="flota64",value=16))
 image = addVariable!(app, Variable(
     name="image",
     type="image",
-    value="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==", 
+    value="", 
 ))
 
 #---------------------------------------------------------------
@@ -49,19 +49,17 @@ ui = VContainer(
     ),  
     H1Label("Static Image Example"),
     Image(
-        variable="image",
-        height="50%",
+        source="\$(image)",
+        # height="50%",
     ),        
     H1Label("Image Viewer allowing Pan (left-drag) and Zoom (wheel)"),
     PanZoom(
-        width="100%",
-        height="400px",
+        style="width: 100%; height=400px;",
         content = Container(
             direction = "row warp",
             children = [
                 Image(
-                    variable="image",
-                    width="100%"
+                    source="\$(image)",
                 ),        
             ]
         ),

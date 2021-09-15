@@ -26,6 +26,11 @@ export  Container,
         Tab,
         Divider,
         Card,
+        Markdown,
+        MDJulia,
+
+        CodeSnip,
+        CodeSnipJulia,
 
         VContainer,
         HContainer,
@@ -119,6 +124,9 @@ end
     type::String = "button"
     text::String = "default button"
     variable::Any = nothing
+    buttonType::String = "raised"     # normal, raised, stroked, flat, icon, fab, mini-fab
+    color::String = "primary"         # normal, primary, accent, warn, 
+    fileTypes::String = ""            # used for an open file dialog, like ".png,.jpg"  
 
     _variable_name_to_create::String = ""
     _app::Union{Nothing, Twinkle.AbstractUIApp} = nothing
@@ -159,18 +167,16 @@ H4Label(text::String) = Label(text=text, class="h4")
 
 @with_kw mutable struct Image <: AbstractUIControl 
     type::String = "image"
-    width::Any = "auto"
-    height::Any = "auto"
-    variable::Any = nothing
-    data::Any = nothing
+    style::Any = ""
+    source::Any = nothing
 
     _app::Union{Nothing, Twinkle.AbstractUIApp} = nothing
 end
 
 @with_kw mutable struct PanZoom <: AbstractUIControl 
     type::String = "pan-zoom"
-    width::Any = "auto"
-    height::Any = "auto"
+    style::Any = "width: 100%; height: 300px;"
+    innerStyle::Any = "width: auto; height: calc(100% - 30px);"
     content::Union{Nothing, UIControls.Container} = nothing
 
     _app::Union{Nothing, Twinkle.AbstractUIApp} = nothing
@@ -215,8 +221,12 @@ end
 @with_kw mutable struct ExpansionPanel <: AbstractUIControl 
     type::String = "expansion-panel"
     title::String = "defaut title"
-    summary::String = ""
+    subtitle::String = ""
     content::Union{Nothing, UIControls.Container} = nothing
+    style::Any = ""
+    titleStyle::String = ""
+    subtitleStyle::String = ""
+    headerStyle::Any = ""
 
     _app::Union{Nothing, Twinkle.AbstractUIApp} = nothing
 end
@@ -239,6 +249,7 @@ end
 
 @with_kw mutable struct Tabs <: AbstractUIControl 
     type::String = "tabs"
+    style::Any = ""
     tabs::Union{Nothing, Vector{UIControls.Tab}} = nothing
 
     _app::Union{Nothing, Twinkle.AbstractUIApp} = nothing
@@ -255,14 +266,43 @@ end
     style::Any = ""
     title::String = ""
     titleVariable::Any = ""
+    titleStyle::String = ""
     subtitle::String = ""
     subtitleVariable::Any = ""
-    content::String = ""
+    subtitleStyle::String = ""
+    content::Union{String, UIControls.Container} = ""
     contentStyle::Any = ""
     variable::Any = ""                  # content source
     isHTML::Bool = false
 
     _app::Union{Nothing, Twinkle.AbstractUIApp} = nothing
 end
+
+@with_kw mutable struct Markdown <: AbstractUIControl 
+    type::String = "markdown"
+    style::Any = ""
+    content::String = ""
+    variable::Any = ""                  # content source
+    lineNumbers::Bool = false
+
+    _app::Union{Nothing, Twinkle.AbstractUIApp} = nothing
+end
+
+MDJulia(code) = Markdown(content = """```julia\n$(code)\n```""")
+
+@with_kw mutable struct CodeSnip <: AbstractUIControl 
+    type::String = "codesnip"
+    text::String = ""
+    language::String = "julia"
+    lineNumbers::Bool = false
+    commandLine::Bool = false
+    prompt::String = "julia>"
+    promptStyle::String = "-webkit-text-fill-color: rgb(51, 200, 51); -webkit-text-stroke-width:0.2px; -webkit-text-stroke-color: black;"
+    rawLines::String = "2-999"
+
+    _app::Union{Nothing, Twinkle.AbstractUIApp} = nothing
+end
+
+CodeSnipJulia(code) = CodeSnip(text=code, commandLine=true, prompt="julia>")
 
 end # module UIControlsget

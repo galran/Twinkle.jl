@@ -17,6 +17,9 @@ using StaticArrays
 import UUIDs
 import Base64
 
+using Reexport
+
+
 include("Misc.jl")
 include("Material.jl")
 include("SceneObject.jl")
@@ -29,8 +32,10 @@ include("UI/UIControls.jl")
 
 include("UI/FlexUI.jl")
 
-using ..UIControls
-using ..UIVariables
+# reexport all the public stuff from UIControls and UIVariables
+
+@reexport using ..UIControls
+@reexport using ..UIVariables
 
         
 #------------------------------------------------------------------------------
@@ -86,6 +91,7 @@ export  Container,
         Tab,
         Divider,
         Card,
+        Markdown,
 
         VContainer,
         HContainer,

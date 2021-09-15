@@ -153,11 +153,14 @@ function fix_controls!(app::App, controls::Vector{UIControls.AbstractUIControl})
             control.variable = unique_var_name
         end
 
+        # TODO: Should replace these statements with a scan of all fields and run the fix on each which is a UIControls.AbstractUIControl
         if (hasproperty(control, :children))
             fix_controls!(app, control.children)
         end
         if (hasproperty(control, :content))
-            fix_controls!(app, Vector{UIControls.AbstractUIControl}([control.content]))
+            if (control.content isa UIControls.AbstractUIControl)
+                fix_controls!(app, Vector{UIControls.AbstractUIControl}([control.content]))
+            end
         end
         if (hasproperty(control, :tabs))
             fix_controls!(app, Vector{UIControls.AbstractUIControl}(control.tabs))
@@ -211,8 +214,8 @@ function Base.run(app::App)
 
     window_defaults = Blink.@d(
         :title => prop(app, :title, "?? app title ??"), 
-        :width => 1600, 
-        :height => 1200,
+        :width => prop(app, :winInitWidth, 1600), 
+        :height => prop(app, :winInitHeight, 1200),
         # this will allow us to load local file which is a security risk
         :webPreferences => Blink.@d(
             :webSecurity => false, 
@@ -236,7 +239,7 @@ function Base.run(app::App)
 
     # show the blink window
     Blink.body!(win, ui, async=false)
-    Blink.AtomShell.opentools(win)
+    # Blink.AtomShell.opentools(win)
 
     # set the controls through JavaScript and also the viewer url
     # js_controls = [UIControls.typedict(c) for c in controls(app)]
@@ -277,7 +280,29 @@ function onBlinkUpdate(args::Dict{Any, Any}, app::App)
         end
 
         render!(app)
+
+    elseif get(meta_data, "source", "") == "dev-tools-update"
+        state = get(data, "state", "")
+        if (state) 
+            Blink.AtomShell.opentools(Twinkle.win(app))
+        else
+            Blink.AtomShell.closetools(Twinkle.win(app))
+        end
+
+    elseif get(meta_data, "source", "") == "set-zoom-level"
+        level = get(data, "level", "")
+        if (endswith(level, '%'))
+            level = level[1:end-1]
+        end
+        level = parse(Float64, level) / 100.0;
         
+        w = Twinkle.win(app)
+        id = w.id
+        @info "zoom level", level
+        command = """windows["$(id)"].webContents.setZoomFactor($level);"""
+        Blink.js(w.shell, Blink.JSString(command), callback=false)
+        @info "zoom level done"
+
     end
 
     # id = data["id"]
