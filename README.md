@@ -4,7 +4,7 @@ Twinkle.jl is a [Julia](https://julialang.org/) package for creating fast and si
 
 It is designed to allow any Julia user to easily create simple UIs, perform quick code experiments where you can tweak the inputs, and visualize the results in the same window. You can update variable values using the interactive controls or using Julia assinments in the REPL or scripts, and Twinkle will make sure everything is synchronized. 
 
-![Twinkle Example](docs/assets/TwinkleSegmentationExample.gif)
+![Twinkle Example](docs/src/assets/TwinkleSegmentationExample.gif)
 
 # Basic usage:
 
@@ -14,5 +14,5 @@ julia> using Twinkle
 julia> Twinkle.runExample("Controls")
 ```
 
-![Controls Example](docs/assets/ControlsGalleryExample.gif)
+![Controls Example](docs/src/assets/ControlsGalleryExample.gif)
 
