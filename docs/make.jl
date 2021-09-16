@@ -21,6 +21,6 @@ println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 deploydocs(
     repo = "github.com/galran/Twinkle.jl.git",
     # devbranch = "main",
-    # push_preview = true,
+    push_preview = true,
 )
 
