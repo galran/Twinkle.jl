@@ -6,7 +6,7 @@ makedocs(
     sitename = "Twinkle.jl",
     format = Documenter.HTML(
         # prettyurls = get(ENV, "CI", nothing) == "true",
-        # assets = [asset("assets/TwinkleJulia.png", class = :ico, islocal = true)],
+        assets = [asset("assets/TwinkleJulia.png", class = :ico, islocal = true)],
     ),
     modules = [Twinkle],
     pages = [
