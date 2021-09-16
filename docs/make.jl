@@ -14,9 +14,13 @@ makedocs(
     ],
     expandfirst = [])
 
+println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+println("@ SANITY CHECK")
+println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+
 deploydocs(
     repo = "github.com/galran/Twinkle.jl.git",
-    devbranch = "main",
-    push_preview = true,
+    # devbranch = "main",
+    # push_preview = true,
 )
 
