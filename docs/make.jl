@@ -30,5 +30,6 @@ println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 deploydocs(
     repo = "github.com/galran/Twinkle.jl.git",
     branch = "gh-pages",
-    devbranch = "main"
+    devbranch = "main",
+    push_preview = true,
 )
