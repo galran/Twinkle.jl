@@ -6,7 +6,7 @@ makedocs(
     sitename = "Twinkle.jl",
     format = Documenter.HTML(
         # prettyurls = get(ENV, "CI", nothing) == "true",
-        # assets = [asset("assets/TwinkleJulia.png", class = :ico, islocal = true)],
+        assets = [asset("assets/TwinkleJulia.png", class = :ico, islocal = true)],
     ),
     modules = [Twinkle],
     pages = [
@@ -14,9 +14,13 @@ makedocs(
     ],
     expandfirst = [])
 
-# deploydocs(
-#     repo = "github.com/microsoft/OpticSim.jl.git",
-#     devbranch = "main",
-#     push_preview = true,
-# )
+println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+println("@ SANITY CHECK")
+println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+
+deploydocs(
+    repo = "github.com/galran/Twinkle.jl.git",
+    # devbranch = "main",
+    # push_preview = true,
+)
 
