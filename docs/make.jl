@@ -14,9 +14,9 @@ makedocs(
     ],
     expandfirst = [])
 
-# deploydocs(
-#     repo = "github.com/microsoft/OpticSim.jl.git",
-#     devbranch = "main",
-#     push_preview = true,
-# )
+deploydocs(
+    repo = "github.com/galran/Twinkle.jl.git",
+    devbranch = "main",
+    push_preview = true,
+)
 
